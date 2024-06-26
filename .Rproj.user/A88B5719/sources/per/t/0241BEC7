@@ -1,18 +1,15 @@
 {
-    "id": "3E09B267",
+    "id": "0241BEC7",
     "path": "D:/GitHub/Ferrugem-Cafeeiro/_quarto.yml",
     "project_path": "_quarto.yml",
     "type": "yaml",
     "hash": "558304773",
     "contents": "",
     "dirty": false,
-    "created": 1719354104708.0,
+    "created": 1719366147651.0,
     "source_on_save": false,
-    "relative_order": 1,
-    "properties": {
-        "source_window_id": "",
-        "Source": "Source"
-    },
+    "relative_order": 4,
+    "properties": {},
     "folds": "",
     "lastKnownWriteTime": 1719350729,
     "encoding": "UTF-8",
