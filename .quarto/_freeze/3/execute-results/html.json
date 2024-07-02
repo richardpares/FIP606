@@ -1,0 +1,15 @@
+{
+  "hash": "ad461899e76b57a51c5869b7775c203a",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Operaciones Matemáticas\"\nauthor: \"Richard Pardes-Espinosa\"\ndata: \"2024-07-01\"\nformat: html\neditor: visual\neditor_options: \n  chunk_output_type: console\ntoc: true\nnumber-sections: true\ncode-fold: show\ncode-summary: \"ver código\"\n---\n\n\n\nEn el entorno de Rstudio, el usuario podría realizar algunas operaciones matemáticas, como suma, resta, mutiplicación, división, potenciación, entre otros. A continuación, se presenta algunos ejemplos:\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Suma\n1 + 7\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 8\n```\n\n\n:::\n\n```{.r .cell-code}\n# Resta\n10 - 3\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 7\n```\n\n\n:::\n\n```{.r .cell-code}\n# Multiplicación\n2*3\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 6\n```\n\n\n:::\n\n```{.r .cell-code}\n# División\n25/5\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 5\n```\n\n\n:::\n\n```{.r .cell-code}\n# Potenciación\n45**3\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 91125\n```\n\n\n:::\n\n```{.r .cell-code}\n45^3\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 91125\n```\n\n\n:::\n\n```{.r .cell-code}\n# Raíz\nsqrt(16)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 4\n```\n\n\n:::\n\n```{.r .cell-code}\n# Logaritmo\nlog10(100)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 2\n```\n\n\n:::\n\n```{.r .cell-code}\nlog(100)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 4.60517\n```\n\n\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

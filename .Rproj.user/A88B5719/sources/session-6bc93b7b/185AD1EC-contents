@@ -1,0 +1,100 @@
+---
+title: "Importación de datos"
+author: "Richard Pardes-Espinosa"
+data: "2024-07-01"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+
+## tible::trible()
+
+La función tibble::tribble permite crear una tabla de manera rápida y legible, siendo especialmente útil para pequeños conjuntos de datos. Cada fila de datos se escribe en una nueva línea y las columnas se especifican con el símbolo ~.
+
+Para utilizar esta función, primero genera un objeto llamado **datos**. A continuación, en el archivo de **Excel**, selecciona y copia las columnas y filas que contienen los datos que deseas trabajar. En RStudio, dirígete al menú superior y haz clic en el botón **Addins**. Se abrirá una ventana con diferentes opciones, donde deberás seleccionar **Paste as tribble**. Esto pegará los datos en el formato adecuado para crear una tabla en R utilizando **tibble::tribble**.
+
+```{r}
+# Cargar librerías
+library(tidyverse)
+
+# Llamar datos
+dato <- tibble::tribble(
+              ~"trat", ~"rep", ~"comp",
+              "Mg2",   1L,     9,
+              "Mg2",   2L,  12.5,
+              "Mg2",   3L,    10,
+              "Mg2",   4L,     8,
+              "Mg2",   5L,  13.2,
+              "Mg2",   6L,    11,
+              "Mg2",   7L,  10.8,
+              "Mg2",   8L,   9.5,
+              "Mg2",   9L,  10.8,
+              "Mg2",  10L,  10.4,
+          "control",   1L, 13.72,
+          "control",   2L, 15.91,
+          "control",   3L,  15.7,
+          "control",   4L,  14.2,
+          "control",   5L,  15.9,
+          "control",   6L, 16.54,
+          "control",   7L,    18,
+          "control",   8L,  14.4,
+          "control",   9L, 16.41,
+          "control",  10L,    16
+          )
+```
+
+Ahora, visualiza la base de datos de la siguiente manera:
+
+```{r}
+dato
+```
+
+## read_csv()
+
+La función `read_csv` de `readr` (parte del tidyverse) para importar datos desde una URL que apunta a un archivo CSV, asignando el contenido a la variable `cr`. Esta función lee y convierte el archivo CSV en un dataframe, facilitando el análisis posterior de los datos.
+
+```{r}
+# Cargar librerías
+library(tidyverse)
+
+# Llamar datos
+cr <- read_csv("https://raw.githubusercontent.com/emdelponte/paper-coffee-rust-Ethiopia/master/data/survey_clean.csv")
+```
+Ahora, corre los códigos y observa la base de datos importada.
+
+```{r}
+# Ver el objeto cr
+glimpse(cr)
+
+# Llamar objeto
+cr
+```
+
+## gsheet2tbl()
+
+El paquete `gsheet` ofrece leer y convertir datos de una hoja de cálculo de Google Sheets en un objeto `tbl_df`. Para ello, primero, se carga la librería `gsheet` con `library(gsheet)`, lo cual permite acceder a las funciones de este paquete. Luego, se usa la función `gsheet2tbl()` para importar los datos desde la URL proporcionada de Google Sheets y almacenarlos en un objeto llamado `mg`, facilitando su manipulación y análisis en R.
+
+```{r}
+# Cargar librerías 
+library(gsheet)
+
+# Llamar objeto
+mg <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit?gid=373270992#gid=373270992")
+```
+
+Visualiza la base de datos.
+
+```{r}
+mg
+```
+
+
+
+
+

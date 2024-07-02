@@ -1,0 +1,42 @@
+---
+title: "Operaciones Matemáticas"
+author: "Richard Pardes-Espinosa"
+data: "2024-07-01"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+
+En el entorno de Rstudio, el usuario podría realizar algunas operaciones matemáticas, como suma, resta, mutiplicación, división, potenciación, entre otros. A continuación, se presenta algunos ejemplos:
+
+```{r}
+# Suma
+1 + 7
+
+# Resta
+10 - 3
+
+# Multiplicación
+2*3
+
+# División
+25/5
+
+# Potenciación
+45**3
+45^3
+
+# Raíz
+sqrt(16)
+
+# Logaritmo
+log10(100)
+log(100)
+```
+

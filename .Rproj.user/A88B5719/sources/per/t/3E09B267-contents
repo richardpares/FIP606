@@ -7,17 +7,53 @@ website:
   navbar:
     pinned: true
     left:
-      - href: Hv_Coffea.qmd
-        text: Generalidades
-      - text: Análise
+      - text: Sobre R y Rstudio
         menu:
+        - href: 1.qmd
+          text: Sobre R y Rstudio
+      - text: Herramientas y operaciones en RStudio
+        menu:
+        - href: 3.qmd
+          text: Operaciones Matemáticas
+        - href: 4.qmd
+          text: Creando vectores y objetos        
+        - href: 5.qmd
+          text: Operaciones estadísticas básicas
+      - text: Base de datos
+        menu:
+        - href: 6.qmd
+          text: Actualiza RStudio 
+      - text: Gráficos GGPLOT2
+        menu:
+        - href: 9.qmd
+          text: Gráfico de barras         
+        - href: 10.qmd
+          text: Gráfico boxplot
+        - href: 11.qmd
+          text: Gráfico de líneas        
+        - href: 12.qmd
+          text: Gráfico con intervalos de confianza     
+        - href: 13.qmd
+          text: Histograma
+        - href: 14.qmd
+          text: Gráfico de dispersión 
+      - text: Tópicos
+        menu:
+        - href: 20.qmd
+          text: Tópico 1         
+        - href: 21.qmd
+          text: Tópico 2
+      - text: Proyecto FIP606
+        menu: 
+        - href: Hv_Coffea.qmd
+          text: Generalidades       
         - href: ferrugem.qmd
           text: AACPD
         - href: ferrugem1.qmd
           text: ANOVA, Avaliação das hipótese e GML
         - href: ferrugem2.qmd
           text: Análise Multivariada
-
+          
   page-navigation: true
   page-footer: 
       center: "Copyright 2024, Richard Paredes-Espinosa®"

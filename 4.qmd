@@ -1,0 +1,105 @@
+---
+title: "Creando vectores y objetos"
+author: "Richard Pardes-Espinosa"
+data: "2024-07-01"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+
+## Vectores
+
+Un vector es una estructura de datos que puede ser un elemento o contener varios elementos del mismo tipo, como números, caracteres o valores lógicos. A continuación, presento algunos ejemplos:
+
+```{r}
+# Vectores simples 
+a <- 1
+a
+
+b <- 2
+b
+
+a + b
+```
+
+Aquí, se presenta algunos ejemplos de vectore útilies:
+
+```{r}
+# crear vectores numéricos
+numericos <- c("5", "25", "100", "625")
+
+# crear vectores categóricos 
+categoricos <- c("manzana", "banana", "naranja", "pera")
+
+# crear vectores lógicos
+logicos <- c("1", "0", "1", "0")
+
+# crear vectores secuencia
+secuencias <- seq(1, 10, by = 2)
+
+# crear vectores repitiendo un valor
+repetir <- rep(7, times = 5)
+
+# Matrix
+matriz <- matrix(1:9, nrow = 3)
+
+# Data frame
+df <- data.frame(
+  id = 1:5,
+  nombre = c("Gabrel", "Yuri", "Raisa", "Mariana", "Ester"),
+  edad = c(23, 25, 30, 22, 29)
+)
+
+# Lista
+df1 <- list(
+  frutas = categoricos,
+  cantidades = numericos,
+  enfermedades = logicos
+)
+
+df1
+```
+
+## Objetos
+
+Un objeto puede tomar diferentes valores, entre ellos puede expresarse como vectores, matrices, data frames, listas, entre otros. Ejemplos:
+
+En el ejemplo podemos aprecir que, un objeto puede ser expresado como un vector (ver sección 2: Vectores)
+
+```{r}
+# Crear un vector numérico
+vector <- c(1, 2, 3, 4, 5)
+
+# Crear un vector de caracteres
+vector_ufv <- c("mejoramiento de plantas", "fitopatologia")
+vector_ufv
+```
+
+Podemos crear una matriz, llamando a la función matrix y solicitando que cree 9 valores númericos (1:9), definiendo un de filas y columnas con nrow y ncol.
+
+```{r}
+# Crear una matriz
+mt <- matrix(1:9, nrow = 3, ncol = 3)
+mt
+```
+
+Para crear un data frame es posible apyándose de la función data.frame.
+
+```{r}
+# Crear un data frame
+df <- data.frame(
+  nombre = c("Jorge", "Emerson", "Eduardo"),
+  edad = c(60, 45, 45),
+  casado = c(FALSE, TRUE, FALSE))
+df
+```
+
+Si obervas, un data frame te presenta una tabla organizada, mientras que una matriz sólo te presenta datos y dimensiones sin precisar el nombre de las observaciones y variables.
+
+Un data frame, por si naturaleza esta lista para realizar los trabajos de analisis de datos, por lo cual es una función de mucha utilidad.

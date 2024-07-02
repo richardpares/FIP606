@@ -1,0 +1,112 @@
+---
+title: "Gráfico de puntos con intervalos de confianza"
+author: "Richard Pardes-Espinosa"
+data: "2024-03-20"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+
+## Importar datos
+
+Usando la función **tibble::tribble** se importa los datos de manera rápida. La base contiene a los tratamientos 
+
+```{r}
+library(tidyverse)
+
+# Crear el dataframe con los datos proporcionados
+dato <- tibble::tribble(
+  ~trat, ~peso, ~germ,
+  "esc",  "p1",   60,
+  "esc",  "p2",   55,
+  "esc",  "p3",   45,
+  "esc",  "p4",   50,
+  "esc",  "p5",   65,
+  "esc",  "p6",   55,
+  "esc",  "p7",   55,
+  "esc",  "p8",   50,
+  "esc",  "p9",   40,
+  "esc", "p10",   45,
+  "eschorm",  "p1",   80,
+  "eschorm",  "p2",   75,
+  "eschorm",  "p3",   70,
+  "eschorm",  "p4",  100,
+  "eschorm",  "p5",   70,
+  "eschorm",  "p6",   75,
+  "eschorm",  "p7",   70,
+  "eschorm",  "p8",   65,
+  "eschorm",  "p9",   95,
+  "eschorm", "p10",   90,
+  "horm",  "p1",   60,
+  "horm",  "p2",   25,
+  "horm",  "p3",   15,
+  "horm",  "p4",   20,
+  "horm",  "p5",   10,
+  "horm",  "p6",   15,
+  "horm",  "p7",   55,
+  "horm",  "p8",    0,
+  "horm",  "p9",   15,
+  "horm", "p10",   10
+)
+dato
+```
+
+## Visualización de gráfico
+
+Después de carga la librería `ggplot2` se procede a definir la función `mean_cl_boot` que calcula la media y el intervalo de confianza del 95% usando la fórmula `1.96 * error estándar`. A continuación, se emplea `ggplot` para crear un gráfico donde se mapea el eje x (`trat`), el eje y (`germ`) y el color de relleno (`trat`). La función `stat_summary` se usa con `fun.data = mean_cl_boot` y `geom = "pointrange"` para agregar puntos con barras de error. Se aplica `theme_minimal` para un tema limpio y `scale_y_continuous` para definir los puntos de interrupción en el eje y. Las etiquetas de los ejes se configuran con `labs`, y `theme` ajusta el tamaño y color del texto de los ejes y elimina la leyenda.
+
+
+```{r}
+# Cargar librería
+library(ggplot2)
+
+# Media e intervalos de confianza al 95%
+mean_cl_boot <- function(x) {
+  m <- mean(x, na.rm = TRUE)
+  se <- sd(x, na.rm = TRUE) / sqrt(length(x))
+  ymin <- m - 1.96 * se  # Intervalo de confianza al 95%
+  ymax <- m + 1.96 * se  # Intervalo de confianza al 95%
+  return(c(y = m, ymin = ymin, ymax = ymax))
+}
+
+# Gráfico con intervalos de confianza
+dato |> 
+  ggplot(aes(x = trat, 
+             y = germ, 
+             fill = trat)) +
+  stat_summary(fun.data = mean_cl_boot, 
+               geom = "pointrange", 
+               size = 0.8) +
+  theme_minimal() +
+  scale_y_continuous(breaks = c(0,20,40,60,80,100)) +
+  labs(x = "Tratamientos", 
+       y = "Germinación (%)") + 
+  theme(axis.text.x = element_text(size = 12, 
+                                   color = "black", 
+                                   hjust = 1),
+        axis.text.y = element_text(size = 12, 
+                                   color = "black"),
+        axis.title = element_text(size = 14, 
+                                  color = "black"),
+        legend.position = "none")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

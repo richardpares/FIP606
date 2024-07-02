@@ -1,0 +1,173 @@
+---
+title: "Gráficos de barras"
+author: "Richard Pardes-Espinosa"
+data: "2024-07-01"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+## Importar datos
+
+Usando la función **tibble::tribble** se importa los datos de manera rápida. La base contiene a los tratamientos 
+
+```{r}
+# Cargar librerías
+library(ggplot2)
+library(ggthemes)
+library(tibble)
+library(tidyverse)
+library(ggpubr)
+library(ggrepel)
+library(dplyr)
+
+# importar datos
+dato <- tibble::tribble(
+              ~"trat", ~"rep", ~"comp",
+              "Mg2",   1L,     9,
+              "Mg2",   2L,  12.5,
+              "Mg2",   3L,    10,
+              "Mg2",   4L,     8,
+              "Mg2",   5L,  13.2,
+              "Mg2",   6L,    11,
+              "Mg2",   7L,  10.8,
+              "Mg2",   8L,   9.5,
+              "Mg2",   9L,  10.8,
+              "Mg2",  10L,  10.4,
+          "control",   1L, 13.72,
+          "control",   2L, 15.91,
+          "control",   3L,  15.7,
+          "control",   4L,  14.2,
+          "control",   5L,  15.9,
+          "control",   6L, 16.54,
+          "control",   7L,    18,
+          "control",   8L,  14.4,
+          "control",   9L, 16.41,
+          "control",  10L,    16
+          )
+dato
+```
+
+## Visualización de medias en gráfico de barras
+
+El código crea un gráfico de barras utilizando los datos del tibble `dato`. Se usa `ggplot()` para definir los mapeos estéticos donde `trat` se asigna al eje x, `comp` al eje y, y `trat` determina el color de relleno de las barras. `geom_bar()` se utiliza con `stat = "identity"` para representar las alturas de las barras según los valores en `comp`, utilizando `position_dodge(0.9)` para separar las barras de diferentes tratamientos. Se aplica un tema clásico con `theme_classic()`, se añade un título al gráfico con `ggtitle()`, y se etiquetan los ejes x e y con `xlab()` y `ylab()`, respectivamente. La paleta de colores se personaliza con `scale_fill_manual()` asignando colores específicos a los tratamientos "Mg2" y "control" para facilitar la distinción visual en la leyenda.
+
+```{r}
+# Gráfico de barras
+dato |> 
+  ggplot(aes(x = trat, 
+             y = comp,
+             fill = trat)) +
+  geom_bar(stat = "identity", 
+           position = position_dodge (0.9), 
+           width = 0.8) + 
+  theme_classic() +
+  ggtitle("Crecimiento de plantas") +
+  xlab("Tratamientos") +
+  ylab("Crecimiento (cm)") +
+  scale_fill_manual(values = c("Mg2" = "#63B8FF", "control" = "#FFFF00"),
+                    name = "Tratamientos",
+                    labels = c("Magnesio", "Control"))
+```
+
+## Visualización de medias y SD en gráfico de barras
+
+Primero, se calculan las medias y errores estándar de la variable `comp` agrupando los datos por `trat` mediante `group_by()` y `summarise()`. Luego, con `ggplot()`, se crea un gráfico de barras donde el eje x representa los tratamientos, el eje y las medias de `comp`, y las barras se rellenan según el tratamiento. Se utiliza `geom_bar()` para las barras y `geom_errorbar()` para las barras de error, mientras que `scale_fill_brewer()` aplica una paleta de colores. Las etiquetas y el tema del gráfico se personalizan con `labs()` y `theme_classic()`, ajustando los ejes y la leyenda con `scale_y_continuous()` y `theme()`.
+
+```{r}
+# Calcular medias y errores estándar
+medias <- dato |> 
+  group_by(trat)  |> 
+  summarise(mean_comp = mean(comp),
+            sd_comp = sd(comp),
+            se_comp = sd(comp) / sqrt(n()))
+
+# Crear el gráfico de barras con medias y errores estándar
+plot1 <- medias |> 
+  ggplot(aes(x = trat, 
+             y = mean_comp, 
+             fill = trat)) +
+  geom_bar(stat = "identity", 
+           position = position_dodge(width = 0.8), 
+           width = 0.7, 
+           color = "black") +
+  geom_errorbar(aes(ymin = mean_comp - se_comp, 
+                    ymax = mean_comp + se_comp),
+                position = position_dodge(width = 0.8), 
+                width = 0.2, color = "black") +
+  scale_fill_brewer(palette = "Blues") +
+  labs(subtitle = " ",
+       x = "Tratamientos",
+       y = "Crecimiento (cm)",
+       fill = "Tratamientos") +
+  theme_classic() +
+  scale_y_continuous(expand = c(0, 0), 
+                     limits = c(0, 25), 
+                     breaks = seq(0, 25, 
+                                  by = 5)) +
+  theme(axis.text.x = element_text(size = 20, 
+                                   color = "black", 
+                                   hjust = 0.5, 
+                                   vjust = 1),
+        axis.text.y = element_text(size = 20, 
+                                   color = "black", 
+                                   hjust = 1, 
+                                   vjust = 0.4),
+        axis.title = element_text(size = 20, 
+                                  color = "black"),
+        legend.position = c(0.12, 0.90),
+        legend.background = element_rect(color = NULL),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 14)) 
+plot1
+```
+
+Finalmente, a plot1 adicionaremos `geom_text()`, el cual añade las medias redondeadas como etiquetas encima de las barras.
+
+```{r}
+# Colocar las medias
+plot1 + geom_text(data = medias,
+            aes(label = round(mean_comp, 2), 
+                y = mean_comp + 2),
+            size = 7, 
+            hjust = 0.5)
+```
+
+## Visualización de medias, SD y comparación de medias en gráfico de barras
+
+En comparación con el código anterior, este script añade un nuevo tibble `legenda` que contiene coordenadas `x`, `y` y etiquetas `label` para las letras "A" y "B". Luego, en la sección de creación del gráfico, se añade `geom_text()` utilizando los datos de `legenda` para colocar las letras "A" y "B" en las coordenadas especificadas (`x = x`, `y = y`, `label = label`). Este nuevo `geom_text()` se posiciona de acuerdo con las coordenadas definidas y se establece `inherit.aes = F` para que no herede los mapeos estéticos del gráfico principal.
+
+```{r}
+# adicionar letras 
+legenda <- tibble(x = c(1,2), 
+                   y = c(18,13), 
+                   label = c("A","B"))
+
+# Crear el gráfico de barras con medias y errores estándar
+plot1 + geom_text(legenda, 
+            mapping = aes (x = x, 
+                           y = y, 
+                           label = label), 
+            size = 7, 
+            inherit.aes = F)
+```
+
+En comparación con el código anterior, esta variación introduce un vector `plot1` que almacena la mayoría de los componentes del gráfico, permitiendo reutilizarlo y simplificando la adición de nuevas capas y modificaciones. En este caso, se añaden las etiquetas con `geom_text()` utilizando los datos de legenda, y se ajusta la posición de la leyenda con `theme(legend.position = c(0.8, 0.90))`. Finalmente, se gira el gráfico para que las barras se muestren horizontalmente utilizando `coord_flip()`. Esto facilita la organización y modificación del código al centralizar los componentes básicos del gráfico en el vector plot1.
+
+```{r}
+# Crear el gráfico de barras con medias y errores estándar
+plot1 + geom_text(legenda, 
+            mapping = aes (x = x, 
+                           y = y, 
+                           label = label), 
+            size = 7, 
+            inherit.aes = F) +
+  theme(legend.position = c(0.8, 0.90)) + 
+          coord_flip()
+```
+

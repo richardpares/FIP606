@@ -1,0 +1,78 @@
+---
+title: "Grafico de distribución"
+author: "Richard Pardes-Espinosa"
+data: "2024-07-01"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: inline
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+# Importar de datos 
+
+Cargar las bibliotecas necesarias con `library(tidyverse)`, que incluye herramientas como `ggplot2` y `dplyr` para manipulación y visualización de datos. Luego, utiliza `read_csv()` para importar datos desde un archivo CSV ubicado en línea en GitHub, asignando estos datos limpios a `cr`. 
+
+La base de datos esta relacionado con incidencia y severidad de la roya del café en Etiopía. 
+
+```{r}
+# Cargar librerías
+library(tidyverse)
+
+cr <- read_csv("https://raw.githubusercontent.com/emdelponte/paper-coffee-rust-Ethiopia/master/data/survey_clean.csv")
+
+cr
+```
+
+# Visualización de gráficos
+
+El gráfico generado utiliza `ggplot()` con `aes()` para mapear la variable `sev2` en el eje x y `region` en el relleno de las barras del histograma. `geom_histogram()` se utiliza para representar los datos como un histograma, y `theme_classic2()` aplica un estilo visual específico al gráfico. Las etiquetas de ejes `x`, `y` y `fill` son definidas con `labs()`, proporcionando claridad sobre los datos representados en el gráfico: severidad en el eje x, número de parcelas en el eje y, y región para el relleno de las barras.
+
+```{r}
+# Cargar librerías 
+library(ggthemes)
+library(ggplot2)
+
+# Histograma
+cr|>
+  ggplot(aes(x = sev2, 
+             fill = region)) +
+  geom_histogram() +
+  theme_classic() +
+  labs(x = "Severidad",
+       y = "Parcelas",
+       fill = "Región")
+```
+
+Con `ggplot()`, se define el gráfico donde `aes(x = sev2)` mapea los datos de severidad en el eje x. `geom_density()` agrega una densidad de distribución suavizada de los datos. `theme_classic2()` aplica un tema clásico al gráfico, y `labs()` personaliza las etiquetas del eje x como "Severidad", del eje y como "Parcelas", y la leyenda como "Distrito". `facet_wrap(~zone)` divide el gráfico en facetas según la variable "zone", lo que permite comparar la distribución de severidades entre diferentes zonas geográficas o de interés.
+
+```{r}
+# Histograma
+cr|>
+  ggplot(aes(x = sev2)) +
+  geom_density() +
+  theme_classic() +
+  labs(x = "Severidad",
+       y = "Parcelas",
+       fill = "Distrito") +
+  facet_wrap(~zone)
+```
+
+A diferencia del anterior gráfico, con `facet_wrap(~district)` dividimos el gráfico en paneles según la variable `district`, lo que permite comparar la distribución de severidades entre diferentes distritos en un mismo gráfico.
+
+```{r}
+# Histograma
+cr|>
+  ggplot(aes(x = sev2)) +
+  geom_density() +
+  theme_classic() +
+  labs(x = "Severidad",
+       y = "Parcelas",
+       fill = "Distrito") +
+  facet_wrap(~district)
+```
+
+

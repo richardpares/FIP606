@@ -1,0 +1,63 @@
+---
+title: "Grafico de dispersión"
+author: "Richard Pardes-Espinosa"
+data: "2024-07-01"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: inline
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+# Importar de datos 
+
+Cargar las bibliotecas necesarias con `library(tidyverse)`, que incluye herramientas como `ggplot2` y `dplyr` para manipulación y visualización de datos. Luego, utiliza `read_csv()` para importar datos desde un archivo CSV ubicado en línea en GitHub, asignando estos datos limpios a `cr`. 
+
+La base de datos esta relacionado con incidencia y severidad de la roya del café en Etiopía. 
+
+```{r}
+# Cargar librerías
+library(tidyverse)
+
+cr <- read_csv("https://raw.githubusercontent.com/emdelponte/paper-coffee-rust-Ethiopia/master/data/survey_clean.csv")
+
+cr
+```
+
+## Visuallización de gráficos
+
+Para visualizar los datos de la base de datos `cr` usamos `ggplot` para mapear la relación entre la variable `inc` y `sev2` en los ejes x e y respectivamente. Se adiciona las observaciones con `geom_point`, ajusta una línea de tendencia con `stat_smooth`, aplica el tema clásico con `theme_classic`, y define las etiquetas del gráfico con `labs`; además, ajusta los intervalos de los ejes x e y con `scale_x_continuous` y `scale_y_continuous`, y personaliza el texto de los ejes y la leyenda con `theme`.
+
+```{r}
+# Cargar librerías
+library(ggplot2)
+library(ggthemes)
+
+# Visualización
+cr |> 
+  ggplot(aes(inc,
+             sev2)) + 
+  geom_point() + 
+  stat_smooth() +
+  theme_classic() +  
+  labs(title = "Relación entre incidencia y severidad",
+       x = "Incidencia",
+       y = "Severidad") +
+  theme_classic() +
+  scale_x_continuous(breaks = c(0,10,20,30,40,50,60,70,80,90,100)) +
+  scale_y_continuous(breaks = c(0,10,20,30,40,50,60,70,80,90,100)) +
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14),
+        legend.title = element_text(size = 14),
+        legend.text = element_text(size = 12)) 
+```
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+---
+title: "Actualiza RStudio"
+author: "Richard Pardes-Espinosa"
+data: "2024-07-01"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+
+Constantemente RStudio lanza nuevas versiones, por lo tanto es necesario indicar dentro de RStudio actualizar la versión con la cual se desea trabajar. Aquí, se presenta unos códigos que te permitirá cambiar la versión de R dentro de RStudio. 
+
+```{r}
+# Instalar el paquete installr si no está instalado
+if (!requireNamespace("installr", quietly = TRUE)) {
+  install.packages("installr")
+}
+
+# Cargar el paquete installr
+library(installr)
+
+# Actualizar R
+updateR()
+```
+

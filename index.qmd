@@ -1,16 +1,10 @@
 ---
-title: "Autores"
+title: "Autor"
 format: html
 editor: visual
 ---
 
-![Amanda Pereira Honório](Autor1.jpg){width=400}
-
-Agrônoma (2015) e Bióloga (2019) formada pelo Instituto Federal de Educação, Ciência e Tecnologia do Sul de Minas Gerais. Possui mestrado em Fitopatologia pela Universidade Federal de Viçosa (2021) e atualmente é doutoranda na mesma instituição. Apresenta experiência na aérea de Nematologia.
-
-[amanda.honorio\@ufv.br](mailto:tu_correo@example.com) \| [ResearchGate](https://www.researchgate.net/profile/Amanda-Honorio-2).
-
-![Richard Paredes-Espino](Autor2.jpg){width=400}
+![Richard Paredes-Espinosa](Autor2.jpg){width="400"}
 
 Engenheiro Agrônomo (2010) com Mestrado em Sanidade Vegetal (Fitosanidade) pela Universidade Nacional Agrária da Selva (UNAS). Atualmente é Doutora em Fitopatologia pela Universidade Federal de Viçosa (UFV). Sua pesquisa concentra-se em estudos epidemiológicos clássicos, seleção de entomopatógenos para controle de pragas e ecologia química.
 

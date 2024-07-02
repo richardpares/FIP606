@@ -1,0 +1,109 @@
+---
+title: "Operaciones estadísticas"
+author: "Richard Pardes-Espinosa"
+data: "2024-07-01"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+## Operaciones básicas
+
+Este script en RStudio utiliza funciones estadísticas básicas para analizar un vector numérico `c(1, 2, 3, 4, 5)`. Primero, `mean()` calcula la media de los valores, proporcionando una medida promedio. Luego, `median()` determina la mediana, que es el valor medio cuando los datos están ordenados. `sd()` calcula la desviación estándar, una medida de dispersión que indica cuánto varían los datos respecto a la media. `sum()` suma todos los valores del vector, proporcionando la suma total. Finalmente, `length()` devuelve el número de elementos en el vector, dando una cuenta del tamaño del conjunto de datos.
+
+```{r}
+# Media
+mean(c(1, 2, 3, 4, 5))  
+
+# Mediana
+median(c(1, 2, 3, 4, 5))
+
+# Desviación estándar 
+sd(c(1, 2, 3, 4, 5))
+
+# Suma 
+sum(c(1, 2, 3, 4, 5))
+
+# Elementos
+length(c(1, 2, 3, 4, 5))
+```
+
+## Manipulación de datos
+
+Para la manipulación de datos, primero, se crea un data frame `df` con columnas `parcelas` y `ufc`, y se usa `subset(df, ufc > 25)` para filtrar las filas donde `ufc` es mayor a 25. Luego, `order(c(3, 1, 4, 1, 5, 9))` devuelve los índices que ordenan el vector de entrada. Para combinar data frames, se crean `df1` y `df2` con columnas `parcelas`, `incidencia`, y `severidad`, respectivamente, y se fusionan usando `merge(df1, df2, by = "parcelas")` para obtener `df3`, que contiene todas las columnas combinadas basadas en la columna común `parcelas`.
+
+```{r}
+# Extrae subconjuntos 
+df <- data.frame(parcelas = 1:5, 
+                 ufc = c(23, 25, 30, 22, 29))
+subset(df, 
+       ufc > 25)  # Filtra filas donde edad > 25
+
+# Ordena
+order(c(3, 1, 4, 1, 5, 9))
+
+# Combina data frames
+df1 <- data.frame(parcelas = 1:10, 
+                  incidencia = c("15", "12", "36", "53", "67", 
+                                 "48", "15", "20", "2", "15"))
+df2 <- data.frame(parcelas = 1:10, 
+                  severidad = c("59", "64", "56", "30", "21", 
+                             "55", "66", "24", "12", "28"))
+df3 <- merge(df1,
+             df2,
+             by = "parcelas")
+df3
+```
+
+## Funciones de gráficos
+
+Se crean dos vectores `x` y `y` con 50 valores aleatorios, eExtraídos del rango de 1 a 100 usando la función `sample`. Luego, se utiliza la función `plot` para crear el gráfico de dispersión donde los puntos representan la relación entre `x` e `y`. Los argumentos `main`, `xlab`, y `ylab` añaden el título "Gráfico de dispersión" y las etiquetas de los ejes "Incidencia" y "Severidad". El argumento `pch = 19` define la forma de los puntos, y `col = "blue"` establece su color a azul. 
+
+```{r}
+# Gráfico de dispersión
+x <- sample(1:100, 50)
+y <- sample(1:100, 50)
+
+# Crear el gráfico de dispersión
+plot(x, 
+     y, 
+     main = "Gráfico de dispersión", 
+     xlab = "Incidencia", 
+     ylab = "Severidad", 
+     pch = 19, 
+     col = "blue")
+```
+
+La función `hist()`, donde `x` representa los datos a graficar. El argumento `main = "Distribución"` añade un título al histograma, `xlab = "Incidencia"` y `ylab = "Frecuencia"` etiquetan los ejes x e y respectivamente, y `breaks = 10` especifica que el histograma debe dividir los datos en 10 intervalos o "bins" para mostrar la frecuencia de los valores dentro de esos rangos.
+
+```{r}
+# histograma 
+hist(x, 
+     main = "Distribución", 
+     xlab = "Incidencia", 
+     ylab = "Frecuencia",
+     breaks = 10)
+```
+
+La función `boxplot` para crear dos diagramas de cajas y bigotes, cada uno con su propio conjunto de datos: el primero con la variable `x` y el segundo con la variable `y`. Ambos gráficos están titulados "Diagrama de cajas y bigotes". Para el gráfico de `x`, las etiquetas de los ejes se configuran con `xlab = "Genotipos de café"` y `ylab = "Incidencia"`, mientras que para el gráfico de `y`, las etiquetas de los ejes se configuran con `xlab = "Genotipos de café"` y `ylab = "Severidad"`. Estos gráficos son útiles para visualizar la distribución, la mediana, los cuartiles y los valores atípicos de las variables mencionadas para diferentes genotipos de café.
+
+```{r}
+# Para la variable x
+boxplot(x,
+        main = "Diagrama de cajas y bigotes",
+        xlab = "Genotipos de café",
+        ylab = "Incidencia")
+
+# Para la variable y
+boxplot(y,
+        main = "Diagrama de cajas y bigotes",
+        xlab = "Genotipos de café",
+        ylab = "Severidad")
+```
+
+

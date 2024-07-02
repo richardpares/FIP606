@@ -1,0 +1,151 @@
+---
+title: "Gráfico de líneas"
+author: "Richard Pardes-Espinosa"
+data: "2024-03-20"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+toc: true
+number-sections: true
+code-fold: show
+code-summary: "ver código"
+---
+
+## Importar datos
+
+Usando la función **tibble::tribble** se importa los datos de manera rápida. La base contiene a los tratamientos 
+
+```{r}
+# Cargar librerías 
+library(tidyverse)                   
+
+# Llamar datos
+dato <- tibble::tribble(
+             ~Irrigation, ~rep, ~day, ~severity,
+                "Furrow",   1L,   0L,      0.01,
+                "Furrow",   2L,   0L,      0.01,
+                "Furrow",   3L,   0L,      0.01,
+                "Furrow",   1L,   7L,      0.04,
+                "Furrow",   2L,   7L,      0.04,
+                "Furrow",   3L,   7L,      0.04,
+                "Furrow",   1L,  14L,       0.1,
+                "Furrow",   2L,  14L,       0.1,
+                "Furrow",   3L,  14L,      0.11,
+                "Furrow",   1L,  21L,      0.11,
+                "Furrow",   2L,  21L,       0.1,
+                "Furrow",   3L,  21L,       0.1,
+                "Furrow",   1L,  28L,      0.15,
+                "Furrow",   2L,  28L,      0.17,
+                "Furrow",   3L,  28L,      0.15,
+                "Furrow",   1L,  35L,      0.18,
+                "Furrow",   2L,  35L,      0.19,
+                "Furrow",   3L,  35L,      0.19,
+                "Furrow",   1L,  42L,      0.34,
+                "Furrow",   2L,  42L,      0.38,
+                "Furrow",   3L,  42L,      0.34,
+                "Furrow",   1L,  49L,      0.38,
+                "Furrow",   2L,  49L,      0.39,
+                "Furrow",   3L,  49L,      0.38,
+                "Furrow",   1L,  56L,       0.4,
+                "Furrow",   2L,  56L,      0.41,
+                "Furrow",   3L,  56L,      0.43,
+                "Furrow",   1L,  63L,      0.46,
+                "Furrow",   2L,  63L,      0.46,
+                "Furrow",   3L,  63L,      0.43,
+                  "Drip",   1L,   0L,      0.01,
+                  "Drip",   2L,   0L,      0.01,
+                  "Drip",   3L,   0L,      0.01,
+                  "Drip",   1L,   7L,      0.03,
+                  "Drip",   2L,   7L,      0.04,
+                  "Drip",   3L,   7L,      0.04,
+                  "Drip",   1L,  14L,      0.11,
+                  "Drip",   2L,  14L,      0.11,
+                  "Drip",   3L,  14L,       0.1,
+                  "Drip",   1L,  21L,      0.13,
+                  "Drip",   2L,  21L,      0.12,
+                  "Drip",   3L,  21L,       0.1,
+                  "Drip",   1L,  28L,      0.16,
+                  "Drip",   2L,  28L,      0.15,
+                  "Drip",   3L,  28L,      0.15,
+                  "Drip",   1L,  35L,      0.18,
+                  "Drip",   2L,  35L,      0.19,
+                  "Drip",   3L,  35L,      0.17,
+                  "Drip",   1L,  42L,       0.3,
+                  "Drip",   2L,  42L,      0.33,
+                  "Drip",   3L,  42L,      0.34,
+                  "Drip",   1L,  49L,      0.33,
+                  "Drip",   2L,  49L,      0.37,
+                  "Drip",   3L,  49L,      0.37,
+                  "Drip",   1L,  56L,      0.39,
+                  "Drip",   2L,  56L,      0.46,
+                  "Drip",   3L,  56L,      0.41,
+                  "Drip",   1L,  63L,      0.43,
+                  "Drip",   2L,  63L,      0.43,
+                  "Drip",   3L,  63L,      0.43
+             )
+dato
+```
+
+## Visualización de la data
+
+Este código utiliza el paquete `ggplot2` para analizar y visualizar datos de severidad de la roya del trigo. Primero, se calculan las medias de severidad agrupadas por tipo de riego (`Irrigation`) y día (`day`) del conjunto de datos `dato`, excluyendo la segunda columna. Luego, se crea un gráfico de líneas donde el eje x representa los días y el eje y muestra la severidad media. Las líneas se diferencian por tipo de riego (`Irrigation`) mediante diferentes tipos de línea, y los puntos resaltan las observaciones individuales, también codificados por tipo de riego mediante diferentes formas. Se elimina la guía para las formas, se agregan etiquetas al título, ejes y leyenda, se aplica un tema clásico y se ajusta el tamaño del texto para mejorar la legibilidad de la gráfica.
+
+```{r}
+# Cargar librería
+library(ggplot2)
+
+# Medias 
+medias <- dato[,-2] |> 
+  group_by(Irrigation, day) |> 
+  summarise(mean_severity = mean(severity))
+
+# Crear el gráfico de líneas
+medias |> 
+  ggplot(aes(x = day, 
+             y = mean_severity)) +
+  geom_line(aes(linetype = Irrigation), 
+            size = 1) +
+  geom_point(aes(shape = Irrigation), 
+             size = 3) +
+  guides(shape = FALSE) +  
+  labs(title = "Severidad de la roya del trigo",
+       x = "Días",
+       y = "Severidad",
+       linetype = "Irrigación") +
+  theme_classic() +
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14),
+        legend.title = element_text(size = 14),
+        legend.text = element_text(size = 12)) 
+```
+
+El código realiza un análisis de regresión lineal sobre los datos contenidos en el tibble `dato`. Utiliza `ggplot()` para crear un gráfico donde los puntos de datos están dispersos (`geom_jitter()`) según el día y la severidad. Luego, `stat_smooth()` ajusta una línea de regresión lineal (`method = "lm"`) con intervalos de confianza (`se = TRUE`), mostrando la relación entre las variables con una línea discontinua de color negro y grosor 1. Se aplica un tema minimalista (`theme_minimal()`) a la trama y se ajustan los tamaños de texto para los ejes y la leyenda para mejorar la legibilidad. Además, utiliza `facet_wrap()` para separar los gráficos según los niveles de la variable "Irrigation", lo que permite comparar las relaciones entre día y severidad bajo diferentes condiciones de riego.
+
+```{r}
+
+# Modelos de regresión lineal 
+dato |>
+  ggplot(aes(day, 
+             severity)) +
+  geom_jitter(size = 2) +
+  stat_smooth(method = "lm", 
+              se = TRUE, 
+              color = "black", 
+              linetype = "dashed", 
+              size = 1, 
+              formula = y ~ x) +
+  theme_minimal() +
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14),
+        legend.title = element_text(size = 14),
+        legend.text = element_text(size = 12)) +
+  facet_wrap(~Irrigation) 
+```
+
+
+
+
+
+
+
